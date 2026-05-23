@@ -1,0 +1,15 @@
+{
+    "newUser": {
+
+        "name":"Pranjal",
+
+        "job":"QA Engineer"
+    },
+
+    "updatedUser": {
+
+        "name":"Pranjal Updated",
+
+        "job":"Senior QA"
+    }
+}

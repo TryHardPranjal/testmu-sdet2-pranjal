@@ -1,13 +1,11 @@
 [
     {
         "testName":"Valid Login",
-        "username":"standard_user",
-        "password":"secret_sauce"
+        "userType":"valid"
     },
 
     {
         "testName":"Invalid Login",
-        "username":"invalid_user",
-        "password":"wrong_password"
+        "userType":"invalid"
     }
 ]

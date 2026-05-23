@@ -1,62 +1,30 @@
-import loginData from '../../test-data/loginData.json';
+import loginData from "../../test-data/loginData.json";
 
-import { test, expect } from '../../fixtures/customFixtures';
+import { test, expect } from "../../fixtures/customFixtures";
 
-import { ENV } from '../../config/env';
+import { ENV } from "../../config/env";
 
-test.describe('Login Feature',()=>{
-
+test.describe("Login Feature", () => {
+  loginData.forEach((data) => {
     test(
-        'Verify successful login',
-        async({
+      data.testName,
 
-            loginPage,
-            dashboardPage
+      async ({ loginPage, dashboardPage }) => {
+        const user =
+          data.userType === "valid" ? ENV.users.valid : ENV.users.invalid;
 
-        })=>{
+        await loginPage.openLoginPage();
 
-            await loginPage.openLoginPage();
+        await loginPage.login(user.username, user.password);
 
-            await loginPage.login(
+        if (data.userType === "valid") {
+          await dashboardPage.verifyDashboardLoaded();
+        } else {
+          const error = await loginPage.getErrorMessage();
 
-                ENV.users.valid.username,
-                ENV.users.valid.password
-
-            );
-
-            await dashboardPage
-            .verifyDashboardLoaded();
-
+          expect(error).toContain("Username and password do not match");
         }
+      },
     );
-
-    test(
-        'Verify invalid login validation',
-        async({
-
-            loginPage
-
-        })=>{
-
-            await loginPage.openLoginPage();
-
-            await loginPage.login(
-
-                ENV.users.invalid.username,
-                ENV.users.invalid.password
-
-            );
-
-            await expect(
-
-                await loginPage
-                .getErrorMessage()
-
-            ).toContain(
-                'Username and password do not match'
-            );
-
-        }
-    );
-
+  });
 });

@@ -1,30 +1,9 @@
-import { test, expect }
+import { test, expect } from "../../fixtures/customFixtures";
 
-from '../../fixtures/customFixtures';
+test("Verify login validation for empty fields", async ({ loginPage }) => {
+  await loginPage.openLoginPage();
 
-test(
+  await loginPage.clickLogin();
 
-'Verify login validation for empty fields',
-
-async({
-
-loginPage
-
-})=>{
-
-await loginPage.openLoginPage();
-
-await loginPage.clickLogin();
-
-expect(
-
-await loginPage
-.getErrorMessage()
-
-).toContain(
-
-'Username is required'
-
-);
-
+  expect(await loginPage.getErrorMessage()).toContain("Username is required");
 });
