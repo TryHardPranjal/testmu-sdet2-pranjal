@@ -1,8 +1,30 @@
-
-# Playwright
+# Dependencies
 node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/playwright/.auth/
+
+# Environment variables
+.env
+
+# Playwright generated files
+test-results/
+playwright-report/
+blob-report/
+
+# Playwright cache and auth
+playwright/.cache/
+playwright/.auth/
+
+# Allure reports
+allure-results/
+allure-report/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
