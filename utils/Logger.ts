@@ -1,29 +1,40 @@
-import winston from 'winston';
+import winston from "winston";
 
-export const logger = winston.createLogger({
+// Centralized framework logger
+// Helps debugging and CI troubleshooting
 
-    level: 'info',
+export class Logger {
+  private static logger = winston.createLogger({
+    level: "info",
 
     format: winston.format.combine(
+      winston.format.timestamp({
+        format: "YYYY-MM-DD HH:mm:ss",
+      }),
 
-        winston.format.timestamp(),
-
-        winston.format.printf(
-            ({timestamp,level,message}) =>
-
-                `${timestamp} ${level}: ${message}`
-        )
+      winston.format.printf(({ timestamp, level, message }) => {
+        return `${timestamp} [${level.toUpperCase()}] ${message}`;
+      }),
     ),
 
-    transports:[
+    transports: [
+      // Console output
 
-        new winston.transports.Console(),
+      new winston.transports.Console(),
 
-        new winston.transports.File({
+      // File output
 
-            filename:'automation.log'
-        })
+      new winston.transports.File({
+        filename: "test-results/framework.log",
+      }),
+    ],
+  });
 
-    ]
+  public static info(message: string): void {
+    this.logger.info(message);
+  }
 
-});
+  public static error(message: string): void {
+    this.logger.error(message);
+  }
+}

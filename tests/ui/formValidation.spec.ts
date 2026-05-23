@@ -1,9 +1,29 @@
 import { test, expect } from "../../fixtures/customFixtures";
 
-test("Verify login validation for empty fields", async ({ loginPage }) => {
-  await loginPage.openLoginPage();
+import { FormPage } from "../../pages/FormPage";
 
-  await loginPage.clickLogin();
+test.describe("Form Validation", () => {
+  test("Verify empty login form validation", async ({ page }) => {
+    const formPage = new FormPage(page);
 
-  expect(await loginPage.getErrorMessage()).toContain("Username is required");
+    await formPage.openForm();
+
+    await formPage.submitEmptyForm();
+
+    expect(await formPage.getValidationMessage()).toContain(
+      "Username is required",
+    );
+  });
+
+  test("Verify password required validation", async ({ page }) => {
+    const formPage = new FormPage(page);
+
+    await formPage.openForm();
+
+    await formPage.submitUsernameOnly("standard_user");
+
+    expect(await formPage.getValidationMessage()).toContain(
+      "Password is required",
+    );
+  });
 });

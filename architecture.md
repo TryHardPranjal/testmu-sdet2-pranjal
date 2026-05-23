@@ -1,18 +1,102 @@
-Framework architecture decisions:
+# Framework Architecture
 
-1. Playwright chosen because:
-   - UI + API support
-   - parallel execution
-   - multi-browser support
+## Technology Selection
 
-2. Pattern:
+### Playwright + TypeScript
 
-Page Object Model
+Chosen because:
 
-3. Reporting:
+- UI and API support in one framework
+- Parallel execution
+- Built-in reporting
+- Cross-browser capability
+- Strong TypeScript support
 
-Allure + Playwright reports
+---
 
-4. CI:
+## Framework Design
 
-GitHub Actions
+Pattern used:
+
+Page Object Model (POM)
+
+Structure:
+
+project-root/
+
+├── api/
+├── pages/
+├── fixtures/
+├── tests/
+│   ├── ui/
+│   ├── api/
+│   └── integration/
+├── utils/
+├── config/
+├── test-data/
+
+Purpose:
+
+- Separate business logic from tests
+- Improve maintainability
+- Encourage reuse
+
+---
+
+## Key Components
+
+### BasePage
+
+Responsibilities:
+
+- Navigation
+- Click actions
+- Fill actions
+- Wait handling
+
+---
+
+### Fixtures
+
+Responsibilities:
+
+- Page initialization
+- Shared setup
+- Dependency injection
+
+---
+
+### Utilities
+
+Responsibilities:
+
+- Logging
+- Assertions
+- Wait handling
+- Retry support
+
+---
+
+## Reporting Strategy
+
+Implemented:
+
+- Playwright HTML reports
+- Allure reporting
+- Screenshots on failure
+- Video retention
+- Trace collection
+- Framework logs
+
+---
+
+## CI/CD Design
+
+GitHub Actions:
+
+- Manual execution
+- PR validation
+- Parallel execution
+- Artifact upload
+
+---

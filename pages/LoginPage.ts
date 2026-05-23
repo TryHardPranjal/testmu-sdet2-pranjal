@@ -1,82 +1,58 @@
-import { Locator, Page } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { Locator, Page } from "@playwright/test";
+import { BasePage } from "./BasePage";
+import { Logger } from "../utils/Logger";
 
 export class LoginPage extends BasePage {
+  // Locators centralized inside page class
+  private usernameInput: Locator;
+  private passwordInput: Locator;
+  private loginButton: Locator;
+  private errorMessage: Locator;
 
-    // Locators centralized inside page class
-    private usernameInput: Locator;
-    private passwordInput: Locator;
-    private loginButton: Locator;
-    private errorMessage: Locator;
+  constructor(page: Page) {
+    super(page);
 
-    constructor(page: Page) {
+    this.usernameInput = page.locator('[data-test="username"]');
 
-        super(page);
+    this.passwordInput = page.locator('[data-test="password"]');
 
-        this.usernameInput = page.locator('[data-test="username"]');
+    this.loginButton = page.locator('[data-test="login-button"]');
 
-        this.passwordInput = page.locator('[data-test="password"]');
+    this.errorMessage = page.locator('[data-test="error"]');
+  }
 
-        this.loginButton = page.locator('[data-test="login-button"]');
+  // Open application
+  async openLoginPage(): Promise<void> {
+    await this.navigate("/");
+  }
 
-        this.errorMessage = page.locator('[data-test="error"]');
-    }
+  // Enter username
+  async enterUsername(username: string): Promise<void> {
+    await this.fill(this.usernameInput, username);
+  }
 
-    // Open application
-    async openLoginPage(): Promise<void> {
+  // Enter password
+  async enterPassword(password: string): Promise<void> {
+    await this.fill(this.passwordInput, password);
+  }
 
-        await this.navigate('/');
-    }
+  // Click login
+  async clickLogin(): Promise<void> {
+    await this.click(this.loginButton);
+  }
 
-    // Enter username
-    async enterUsername(username: string): Promise<void> {
+  // Combined reusable login action
+  async login(username: string, password: string): Promise<void> {
+    Logger.info('Attempting user login');
 
-        await this.fill(
-            this.usernameInput,
-            username
-        );
+    await this.enterUsername(username);
 
-    }
+    await this.enterPassword(password);
 
-    // Enter password
-    async enterPassword(password: string): Promise<void> {
+    await this.clickLogin();
+  }
 
-        await this.fill(
-            this.passwordInput,
-            password
-        );
-
-    }
-
-    // Click login
-    async clickLogin(): Promise<void> {
-
-        await this.click(
-            this.loginButton
-        );
-
-    }
-
-    // Combined reusable login action
-    async login(
-        username: string,
-        password: string
-    ): Promise<void> {
-
-        await this.enterUsername(username);
-
-        await this.enterPassword(password);
-
-        await this.clickLogin();
-
-    }
-
-    async getErrorMessage(): Promise<string> {
-
-        return await this.getText(
-            this.errorMessage
-        );
-
-    }
-
+  async getErrorMessage(): Promise<string> {
+    return await this.getText(this.errorMessage);
+  }
 }

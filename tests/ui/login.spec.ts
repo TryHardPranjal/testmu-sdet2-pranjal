@@ -1,7 +1,7 @@
 import loginData from "../../test-data/loginData.json";
-
 import { test, expect } from "../../fixtures/customFixtures";
-
+import { Logger }
+from "../../utils/Logger";
 import { ENV } from "../../config/env";
 
 test.describe("Login Feature", () => {

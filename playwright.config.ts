@@ -60,13 +60,20 @@ export default defineConfig({
       }
     },
 
-    // {
-    //   name: 'Firefox',
+    {
+      name: 'Firefox',
 
-    //   use: {
-    //     ...devices['Desktop Firefox']
-    //   }
-    // }
+      use: {
+        ...devices['Desktop Firefox']
+      }
+    },
+    {
+    name: "WebKit",
+
+    use: {
+        ...devices["Desktop Safari"]
+    }
+}
 
   ]
 

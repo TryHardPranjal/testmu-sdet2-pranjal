@@ -1,54 +1,38 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator, Page } from "@playwright/test";
 
-import { BasePage } from './BasePage';
+import { BasePage } from "./BasePage";
+import { Logger } from "../utils/Logger";
 
 export class DashboardPage extends BasePage {
+  private inventoryTitle: Locator;
 
-    private inventoryTitle: Locator;
+  private backpackButton: Locator;
 
-    private backpackButton: Locator;
+  private cartBadge: Locator;
 
-    private cartBadge: Locator;
+  constructor(page: Page) {
+    super(page);
 
-    constructor(page: Page) {
+    this.inventoryTitle = page.locator(".title");
 
-        super(page);
+    this.backpackButton = page.locator(
+      '[data-test="add-to-cart-sauce-labs-backpack"]',
+    );
 
-        this.inventoryTitle = page.locator(
-            '.title'
-        );
+    this.cartBadge = page.locator(".shopping_cart_badge");
+  }
 
-        this.backpackButton = page.locator(
-            '[data-test="add-to-cart-sauce-labs-backpack"]'
-        );
+  async verifyDashboardLoaded(): Promise<void> {
+    await this.waitForElement(this.inventoryTitle);
+  }
 
-        this.cartBadge = page.locator(
-            '.shopping_cart_badge'
-        );
-    }
+  async addBackpackToCart(): Promise<void> {
+    Logger.info("Adding backpack product to cart");
 
-    async verifyDashboardLoaded(): Promise<void> {
+    await this.click(this.backpackButton);
+  }
 
-        await this.waitForElement(
-            this.inventoryTitle
-        );
-
-    }
-
-    async addBackpackToCart(): Promise<void> {
-
-        await this.click(
-            this.backpackButton
-        );
-
-    }
-
-    async getCartCount(): Promise<string> {
-
-        return await this.getText(
-            this.cartBadge
-        );
-
-    }
-
+  async getCartCount(): Promise<string> {
+    return await this.getText(this.cartBadge);
+  }
 }

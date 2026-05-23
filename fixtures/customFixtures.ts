@@ -1,35 +1,49 @@
-import { test as base } from '@playwright/test';
+import { test as base } from "@playwright/test";
 
-import { LoginPage } from '../pages/LoginPage';
-import { DashboardPage } from '../pages/DashboardPage';
+import { LoginPage } from "../pages/LoginPage";
+import { DashboardPage } from "../pages/DashboardPage";
+
+import { Logger } from "../utils/Logger";
 
 type MyFixtures = {
+  loginPage: LoginPage;
 
-    loginPage: LoginPage;
-
-    dashboardPage: DashboardPage;
+  dashboardPage: DashboardPage;
 };
 
 export const test = base.extend<MyFixtures>({
+  loginPage: async (
+    { page },
 
-    loginPage: async ({ page }, use) => {
+    use,
+  ) => {
+    await use(new LoginPage(page));
+  },
 
-        await use(
+  dashboardPage: async (
+    { page },
 
-            new LoginPage(page)
-        );
-
-    },
-
-    dashboardPage: async ({ page }, use) => {
-
-        await use(
-
-            new DashboardPage(page)
-        );
-
-    }
-
+    use,
+  ) => {
+    await use(new DashboardPage(page));
+  },
 });
 
-export { expect } from '@playwright/test';
+// Test lifecycle logs
+
+test.beforeEach(async ({}, testInfo) => {
+  Logger.info(
+    `[${testInfo.title}]
+            Starting execution`,
+  );
+});
+
+test.afterEach(async ({}, testInfo) => {
+  Logger.info(
+    `[${testInfo.title}]
+            Finished execution
+            Status: ${testInfo.status}`,
+  );
+});
+
+export { expect } from "@playwright/test";
