@@ -8,7 +8,7 @@ import { DashboardPage } from "../../pages/DashboardPage";
 import { UserAPI } from "../../api/UserAPI";
 
 test.describe("Framework Integration Flow", () => {
-  test.only("Verify API layer and UI layer execution in a single workflow", async ({
+  test("Verify API layer and UI layer execution in a single workflow", async ({
     page,
   }) => {
     // Dedicated API context
