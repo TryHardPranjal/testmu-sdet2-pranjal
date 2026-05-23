@@ -1,0 +1,13 @@
+[
+    {
+        "testName":"Valid Login",
+        "username":"standard_user",
+        "password":"secret_sauce"
+    },
+
+    {
+        "testName":"Invalid Login",
+        "username":"invalid_user",
+        "password":"wrong_password"
+    }
+]

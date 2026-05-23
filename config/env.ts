@@ -2,9 +2,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Centralized environment config
-// Tests should consume ENV instead of process.env
-
 export const ENV = {
 
     baseURL: process.env.BASE_URL || '',
@@ -12,8 +9,8 @@ export const ENV = {
     users: {
 
         valid: {
-            username: process.env.USERNAME || '',
-            password: process.env.PASSWORD || ''
+            username: process.env.SAUCE_USERNAME || '',
+            password: process.env.SAUCE_PASSWORD || ''
         },
 
         invalid: {
